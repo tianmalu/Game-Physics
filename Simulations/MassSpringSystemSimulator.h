@@ -36,7 +36,7 @@ public:
 	Vec3 getPositionOfMassPoint(int index);
 	Vec3 getVelocityOfMassPoint(int index);
 	void applyExternalForce(Vec3 force);
-	
+
 	// Do Not Change
 	void setIntegrator(int integrator) {
 		m_iIntegrator = integrator;
@@ -49,10 +49,39 @@ private:
 	float m_fDamping;
 	int m_iIntegrator;
 
+	// Extra Attributes
+	struct Masspoint {
+		Vec3 position;
+		Vec3 Velocity;
+		bool isFixed;
+	};
+	std::vector<Masspoint> masspointVector;
+	struct Spring {
+		int masspoint1;
+		int masspoint2;
+		float initialLength;
+	};
+	std::vector<Spring> springVector;
+	float massPointSize;
+	Vec3 lineColor;
+	float defalut_initlength;
+	float m_fGravity;
+	float m_fTimestep;
+	int m_numberOfSpring;
+
 	// UI Attributes
 	Vec3 m_externalForce;
 	Point2D m_mouse;
 	Point2D m_trackmouse;
 	Point2D m_oldtrackmouse;
+
+	// Extra Functions
+	void explicitEuler(float timeStep);
+	std::tuple <Vec3, Vec3>  acceleration(Masspoint mp1, Masspoint mp2);
+	Vec3 direction(Vec3 p1, Vec3 p2);
+	void midpoint(float timeStep);
+	void leapfrog(float timeStep);
+	void wallCollision(Masspoint& mp);
+	
 };
 #endif

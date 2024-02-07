@@ -20,10 +20,12 @@ using namespace GamePhysics;
 
 //#define ADAPTIVESTEP
 
-#define TEMPLATE_DEMO
+//#define TEMPLATE_DEMO
 //#define MASS_SPRING_SYSTEM
 //#define RIGID_BODY_SYSTEM
 //#define SPH_SYSTEM
+#define PIN_BALL_SIMULATOR
+
 
 #ifdef TEMPLATE_DEMO
 #include "TemplateSimulator.h"
@@ -37,10 +39,13 @@ using namespace GamePhysics;
 #ifdef SPH_SYSTEM
 //#include "SPHSystemSimulator.h"
 #endif
+#ifdef PIN_BALL_SIMULATOR
+#include "PinballSimulator.h"
+#endif
 
 DrawingUtilitiesClass * g_pDUC;
 Simulator * g_pSimulator;
-float 	g_fTimestep = 0.001;
+float 	g_fTimestep = 0.0001;
 #ifdef ADAPTIVESTEP
 float   g_fTimeFactor = 1;
 #endif
@@ -369,6 +374,10 @@ int main(int argc, char* argv[])
 #endif
 #ifdef SPH_SYSTEM
 	//g_pSimulator= new SPHSystemSimulator();
+#endif
+#ifdef PIN_BALL_SIMULATOR
+#include "PinballSimulator.h"
+	g_pSimulator = new PinballSimulator();
 #endif
 	g_pSimulator->reset();
 
